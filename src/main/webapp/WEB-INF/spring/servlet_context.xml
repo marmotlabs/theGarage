@@ -15,15 +15,6 @@
 
     <!--     Enabling Spring MVC configuration through annotations -->
     <mvc:annotation-driven/>
-    
-    <!--     Skips the whole DispatcherServlet workflow for /css, /img and /js resources; they are served as static resources 
-    <mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
-    <mvc:resources mapping="/img/**" location="/WEB-INF/resources/img/" />
-    <mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
-    <mvc:resources mapping="/fonts/**" location="/WEB-INF/resources/fonts/" />
-     Temporary storing JQuery online resources for no-network cases 
-    <mvc:resources mapping="/_cache/**" location="/WEB-INF/resources/_cache/" />-->
-    
             
     <!-- Thymeleaf -->
     <!-- Based on what the @Controller methods return, it adds a prefix and a suffix to find the template to be displayed -->
