@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,19 +20,22 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 @Table(name = "VEHICLE")
 @SequenceGenerator(name = "VEHICLE_ID_GEN", sequenceName = "SQ_VEHICLE", allocationSize = 1)
+@NamedQuery(name = Vehicle.GET_VEHICLE_BY_LICENSE_PLATE, query = "select v from Vehicle v where v.licensePlate = :licensePlate")
 public class Vehicle implements Serializable {
+
+    public static final String GET_VEHICLE_BY_LICENSE_PLATE = "Vehicle.getVehicleByLicensePlate";
 
     @Id
     @Column(name = "VEHICLE_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VEHICLE_ID_GEN")
     private Long id;
 
-    @Column(name = "LICENSE_PLATE", nullable = false, unique = true)
-    private String licensePlate;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false)
-    private TypeOfVehicle type;
+    private VehicleType type;
+
+    @Column(name = "LICENSE_PLATE", nullable = false, unique = true)
+    private String licensePlate;
 
     public Long getId() {
         return id;
@@ -39,6 +43,14 @@ public class Vehicle implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public VehicleType getType() {
+        return type;
+    }
+
+    public void setType(VehicleType type) {
+        this.type = type;
     }
 
     public String getLicensePlate() {
@@ -49,20 +61,12 @@ public class Vehicle implements Serializable {
         this.licensePlate = licensePlate;
     }
 
-    public TypeOfVehicle getType() {
-        return type;
-    }
-
-    public void setType(TypeOfVehicle type) {
-        this.type = type;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this).
                 append("id", id).
-                append("licensePlate", licensePlate).
                 append("type", type).
+                append("licensePlate", licensePlate).
                 toString();
     }
 }
