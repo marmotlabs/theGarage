@@ -22,35 +22,54 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <div class="row">
-                        <div class="col-sm-2 col-sm-offset-11 content">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="/">
-                                <img class="logo" src="../resources/img/car_logo.png" th:src="@{/img/car_logo.png}" alt="Parking"/>
-                                <img class="logo" src="../resources/img/motorbike.png" th:src="@{/img/motorbike.png}" alt="Parking"/>
-                            </a>
-                        </div>
-                    </div>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <img class="logo" src="../resources/img/logo/garage_logo.png" th:src="@{/img/logo/garage_logo.png}" alt="The Garage"/>
+                    </a>
                 </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Manager area</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
         <!--/NAV-->
 
         <!-- Garage background image --> 
         <div class="garage-cover">
-            <div class="image" style="background-image: url(../resources/img/parking_background.jpeg);" th:style="'background-image: url(' + @{/img/parking_background.jpeg} + ');'"></div>
+            <div class="image" style="background-image: url(../resources/img/cover.jpg);" th:style="'background-image: url(' + @{/img/cover.jpg} + ');'"></div>
         </div>
         <!-- /Garage background image --> 
 
         <div class="container">
             <div class="row">
-                <div class="col-sm-10 col-xs-12">
-
+                <!--parking info with picture-->
+                <div class="col-sm-3 col-xs-12 content">
+                    <div class="hidden-xs">
+                        <img class="image" src="../resources/img/parking-sign.png" th:src="@{/img/parking-sign.png}" alt="Event picture"/>
+                    </div>
+                    <div class="free-busy" th:switch="${numberOfFreeSpaces} > 0">
+                        <div class="free" th:case="${true}">
+                            Free
+                        </div>
+                        <div class="full" th:case="${false}">
+                            Full
+                        </div>
+                    </div>
+                    <div class="places">
+                        <p th:text="${numberOfFreeSpaces} + ' free places'">9 free places</p>
+                    </div>
+                </div>
+                
+                <div class="col-sm-9 col-xs-12">
                     <!-- Status to be displayed for action enter/exit vehicle -->
                     <div th:switch="${enterVehicleStatus}">
                         <div th:case="OK" class="alert alert-success alert-dismissible" role="alert">
@@ -73,7 +92,7 @@
                         </div>
                         <div th:case="ERROR_VEHICLE_NOT_IN_THE_GARAGE" class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <p>Vehicle is not in the garage.</p>
+                            Vehicle is not in the garage.
                         </div>
                     </div>
                     <!-- /Status to be displayed for action enter/exit vehicle -->
@@ -121,22 +140,7 @@
                     </form>
                     <div><br /></div>
                 </div>
-                <!--parking info with picture-->
-                <div class="col-sm-2 col-xs-12 content">
-                    <div class="free-busy" th:switch="${numberOfFreeSpaces} > 0">
-                        <div class="free" th:case="${true}">
-                            Free
-                        </div>
-                        <div class="full" th:case="${false}">
-                            Full
-                        </div>
-                    </div>
-                    <div class="places">
-                        <p th:text="${numberOfFreeSpaces} + ' free places'">9 free places</p>
-                    </div>
-                    <div><br /></div>
-                    <img class="image" src="../resources/img/parking_info.png" th:src="@{/img/parking_info.png}" alt="Parking logo"/>
-                </div>
+
             </div>
         </div>
 

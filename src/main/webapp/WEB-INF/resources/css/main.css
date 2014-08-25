@@ -9,7 +9,10 @@
 
 .content .image {
     width: 100%;
-    margin-bottom: 20px;
+}
+
+.search-form .search.btn {
+    width: 100%;
 }
 
 .footer {
@@ -45,21 +48,19 @@
 }
 
 .free-busy {
-    width: 200px;
+    width: 100%;
     padding: 10px;
     text-align: center;
     font-size: 30px;
     font-weight: bold;
     background: #466bb5;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
 }
 
 .free-busy .free {
     margin: 10px;
     border-style: solid;
     border-width: 6px;
-    border-color: #gfffff;
+    border-color: #ffffff;
     color: #ffffff;
     background: #089a05;
 }
@@ -74,14 +75,12 @@
 }
 
 .places {
-    width: 200px;
-    color: #ffffff;
-    background: #dff0d8;
+    width: 100%;
+    color: #089a05;
+    background: #000000;
     text-align: center;
     font-size: 30px;
     margin-bottom: 10px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
 }
 
 .padding-bottom {
