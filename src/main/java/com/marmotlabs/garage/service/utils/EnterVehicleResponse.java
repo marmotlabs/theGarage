@@ -1,23 +1,24 @@
-package com.marmotlabs.garage.service;
+package com.marmotlabs.garage.service.utils;
 
 import com.marmotlabs.garage.model.Space;
 import com.marmotlabs.garage.model.Vehicle;
 
 /**
- *
- * @author Sofia Craciun <sofia.craciun@gmail.com>
+ * POJO class used as a return type for the enterVehicle() operation.
+ * 
+ * @author Sofia Craciun <craciun.sofia@gmail.com>
  */
-public class ExitVehicleResponse {
+public class EnterVehicleResponse {
 
-    private ExitVehicleStatus status;
+    private EnterVehicleStatus status;
     private Vehicle vehicle;
     private Space space;
 
-    public ExitVehicleStatus getStatus() {
+    public EnterVehicleStatus getStatus() {
         return status;
     }
 
-    public void setStatus(ExitVehicleStatus status) {
+    public void setStatus(EnterVehicleStatus status) {
         this.status = status;
     }
 

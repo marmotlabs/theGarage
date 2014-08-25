@@ -11,19 +11,31 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
+ * <p>Entity class representing a level in the garage.</p>
  *
- * @author Sofia Craciun <sofia.craciun@gmail.com>
+ * <p>Offers full flexibility about the number of levels in the garage.</p>
+ *
+ * <p>At least one level is required in order to have any {@link Space} and thus
+ * any {@link Vehicle} in the database.</p>
+ *
+ * @author Sofia Craciun <craciun.sofia@gmail.com>
  */
 @Entity
 @Table(name = "LEVEL")
 @SequenceGenerator(name = "LEVEL_ID_GEN", sequenceName = "SQ_LEVEL", allocationSize = 1)
 public class Level implements Serializable {
 
+    /**
+     * Technical ID.
+     */
     @Id
     @Column(name = "LEVEL_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LEVEL_ID_GEN")
     private Long id;
 
+    /**
+     * Business ID (uniquely identifies the entity).
+     */
     @Column(name = "STORY", nullable = false, unique = true)
     private String story;
 

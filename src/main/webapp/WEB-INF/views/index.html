@@ -41,18 +41,17 @@
         </nav>
         <!--/NAV-->
 
-        <!--garage background img--> 
+        <!-- Garage background image --> 
         <div class="garage-cover">
             <div class="image" style="background-image: url(../resources/img/parking_background.jpeg);" th:style="'background-image: url(' + @{/img/parking_background.jpeg} + ');'"></div>
         </div>
+        <!-- /Garage background image --> 
 
         <div class="container">
-
-            <!--parking info with picture and form-->
             <div class="row">
-                <div class="col-sm-7 col-xs-12">
+                <div class="col-sm-10 col-xs-12">
 
-                    <!--INFO-->
+                    <!-- Status to be displayed for action enter/exit vehicle -->
                     <div th:switch="${enterVehicleStatus}">
                         <div th:case="OK" class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -77,6 +76,8 @@
                             <p>Vehicle is not in the garage.</p>
                         </div>
                     </div>
+                    <!-- /Status to be displayed for action enter/exit vehicle -->
+
                     <p class="row col-sm-12 col-xs-12">
                         Please use the form below to enter/exit a vehicle to/from the garage:
                     </p>
@@ -86,7 +87,7 @@
                                 <span class="input-group-addon">
                                     Vehicle in:
                                 </span>
-                                <input type="text" name="licensePlate" id="licensePlate" class="form-control" placeholder="License plate number, eg: M G 5387"/>
+                                <input type="text" name="licensePlate" class="form-control" placeholder="License plate number..."/>
                             </div>
                         </div>
                         <div class="col-sm-3 col-xs-12">
@@ -111,7 +112,7 @@
                                 <span class="input-group-addon">
                                     Vehicle out:
                                 </span>
-                                <input type="text" name="licensePlate" id="licensePlate"  class="form-control" placeholder="License plate number, eg: M G 5387"/>
+                                <input type="text" name="licensePlate" id="licensePlate"  class="form-control" placeholder="License plate number..."/>
                             </div>
                         </div>
                         <div class="col-sm-3 col-xs-12">
@@ -119,6 +120,9 @@
                         </div>
                     </form>
                     <div><br /></div>
+                </div>
+                <!--parking info with picture-->
+                <div class="col-sm-2 col-xs-12 content">
                     <div class="free-busy" th:switch="${numberOfFreeSpaces} > 0">
                         <div class="free" th:case="${true}">
                             Free
@@ -130,9 +134,7 @@
                     <div class="places">
                         <p th:text="${numberOfFreeSpaces} + ' free places'">9 free places</p>
                     </div>
-                </div>
-                <!--parking info with picture-->
-                <div class="col-sm-5 col-xs-12 content">
+                    <div><br /></div>
                     <img class="image" src="../resources/img/parking_info.png" th:src="@{/img/parking_info.png}" alt="Parking logo"/>
                 </div>
             </div>
@@ -157,11 +159,6 @@
                 </div>
             </div>
         </div>
-        <script src="../resources/_cache/jquery-1.11.0.min.js" th:src="@{/_cache/jquery-1.11.0.min.js}"></script>
-        <!--<script src="http://code.jquery.com/jquery-1.11.0.min.js" th:src="@{http://code.jquery.com/jquery-1.11.0.min.js}"></script>-->
-        <script src="../resources/_cache/jquery-ui.js" th:src="@{/_cache/jquery-ui.js}"></script>
-        <!--<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js" th:src="@{http://code.jquery.com/ui/1.10.4/jquery-ui.js}"></script>-->
         <script src="../resources/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-
     </body>
 </html>

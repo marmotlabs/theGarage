@@ -16,6 +16,9 @@ public class VehicleDaoImpl extends AbstractDaoImpl<Vehicle, Long> implements Ve
         super(Vehicle.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vehicle getVehicleByLicensePlate(String licensePlate) {
         Query query = getCurrentSession().getNamedQuery(Vehicle.GET_VEHICLE_BY_LICENSE_PLATE);

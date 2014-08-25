@@ -26,6 +26,9 @@ public class SpaceDaoImpl extends AbstractDaoImpl<Space, Long> implements SpaceD
         return ((Number) query.uniqueResult()).intValue();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Space getSpaceByLicensePlate(String licensePlate) {
         Query query = getCurrentSession().getNamedQuery(Space.GET_SPACE_BY_LICENSE_PLATE);
@@ -35,6 +38,9 @@ public class SpaceDaoImpl extends AbstractDaoImpl<Space, Long> implements SpaceD
         return (Space) query.uniqueResult();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Space getFirstEmptySpace() {
         Query query = getCurrentSession().getNamedQuery(Space.GET_FIRST_EMPTY_SPACE);

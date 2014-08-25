@@ -6,19 +6,19 @@ import com.marmotlabs.garage.model.Space;
 import com.marmotlabs.garage.model.Vehicle;
 import com.marmotlabs.garage.model.VehicleType;
 import com.marmotlabs.garage.service.GarageService;
-import com.marmotlabs.garage.service.EnterVehicleResponse;
-import com.marmotlabs.garage.service.EnterVehicleStatus;
-import com.marmotlabs.garage.service.ExitVehicleResponse;
-import com.marmotlabs.garage.service.ExitVehicleStatus;
+import com.marmotlabs.garage.service.utils.EnterVehicleResponse;
+import com.marmotlabs.garage.service.utils.EnterVehicleStatus;
+import com.marmotlabs.garage.service.utils.ExitVehicleResponse;
+import com.marmotlabs.garage.service.utils.ExitVehicleStatus;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Stateless service used to get events from the database.
- *
- * @author Sofia Craciun <sofia.craciun@gmail.com>
+ * Stateless implementation of the {@link GarageService}.
+ * 
+ * {@inheritDoc}
  */
 @Service
 @Transactional(readOnly = true)
@@ -30,9 +30,6 @@ public class GarageServiceImpl implements GarageService {
     @Autowired
     private VehicleDao vehicleDao;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer getNumberOfFreeSpaces() {
         return spaceDao.getNumberOfFreeSpaces();
@@ -47,7 +44,7 @@ public class GarageServiceImpl implements GarageService {
         Space space = spaceDao.getFirstEmptySpace();
 
         if (space == null) {
-            // If there is no empty space found, return EnterVehicleStatus.ERROR_GARAGE_IS_FULL
+            // If there is no empty space found, the garage is full, return ERROR_GARAGE_IS_FULL
             result.setStatus(EnterVehicleStatus.ERROR_GARAGE_IS_FULL);
         } else {
             // Get vehicle by licensePlate
@@ -67,17 +64,18 @@ public class GarageServiceImpl implements GarageService {
             if (currentSpaceForVehicle == null) {
                 // Most optimistic case: garage is not full + vehicle not already in
 
-                // We will need the level in the view
+                // Level is lazy, but we will need it in the view, where the session will be closed
                 Hibernate.initialize(space.getLevel());
 
                 // Assign a space to the current vehicle
                 space.setVehicle(vehicle);
                 spaceDao.saveOrUpdate(space);
+                // Populate the result
                 result.setStatus(EnterVehicleStatus.OK);
                 result.setSpace(space);
                 result.setVehicle(vehicle);
             } else {
-                // This vehicle is already in the garage, return EnterVehicleStatus.ERROR_VEHICLE_ALREADY_IN
+                // This vehicle is already in the garage, return ERROR_VEHICLE_ALREADY_IN
                 result.setStatus(EnterVehicleStatus.ERROR_VEHICLE_ALREADY_IN);
             }
         }
@@ -90,27 +88,25 @@ public class GarageServiceImpl implements GarageService {
     public ExitVehicleResponse exitVehicle(String licensePlate) {
         ExitVehicleResponse result = new ExitVehicleResponse();
 
-        // Verify if vehicle is in garage 
+        // Check if vehicle is in the garage 
         Space currentSpaceForVehicle = spaceDao.getSpaceByLicensePlate(licensePlate);
 
         if (currentSpaceForVehicle == null) {
-
-            // If there is no empty space found, return ExitVehicleStatus.ERROR_VEHICLE_NOT_IN_THE_GARAGE
+            // If there is no empty space found, return ERROR_VEHICLE_NOT_IN_THE_GARAGE
             result.setStatus(ExitVehicleStatus.ERROR_VEHICLE_NOT_IN_THE_GARAGE);
         } else {
-
-            // We will need the level in the view
+            // Level is lazy, byt we will need the level in the view, where the session will be closed
             Hibernate.initialize(currentSpaceForVehicle.getLevel());
 
             currentSpaceForVehicle.setVehicle(null);
             spaceDao.saveOrUpdate(currentSpaceForVehicle);
+
+            // Populate the result
             result.setStatus(ExitVehicleStatus.OK);
             result.setSpace(currentSpaceForVehicle);
             result.setVehicle(vehicleDao.getVehicleByLicensePlate(licensePlate));
-
         }
 
         return result;
     }
-
 }

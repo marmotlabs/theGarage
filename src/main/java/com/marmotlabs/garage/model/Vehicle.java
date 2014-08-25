@@ -14,8 +14,14 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
+ * <p>
+ * Entity class representing a vehicle.</p>
  *
- * @author Sofia Craciun <sofia.craciun@gmail.com>
+ * <p>
+ * A vehicle from our database could be associated to a {@link Space} or
+ * not.</p>
+ *
+ * @author Sofia Craciun <craciun.sofia@gmail.com>
  */
 @Entity
 @Table(name = "VEHICLE")
@@ -25,15 +31,24 @@ public class Vehicle implements Serializable {
 
     public static final String GET_VEHICLE_BY_LICENSE_PLATE = "Vehicle.getVehicleByLicensePlate";
 
+    /**
+     * Technical ID.
+     */
     @Id
     @Column(name = "VEHICLE_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VEHICLE_ID_GEN")
     private Long id;
 
+    /**
+     * Vehicle type: CAR or MOTORBIKE (for the moment).
+     */
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false)
     private VehicleType type;
 
+    /**
+     * Business ID (uniquely identifies the entity).
+     */
     @Column(name = "LICENSE_PLATE", nullable = false, unique = true)
     private String licensePlate;
 

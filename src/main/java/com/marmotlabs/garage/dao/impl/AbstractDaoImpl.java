@@ -23,7 +23,22 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements Abst
     @Autowired
     private SessionFactory sessionFactory;
 
-    // Database > JNDI resource > DataSource > SessionFactory > Session > TrasactionManager > Transaction > Query > Result > nrOfFreeSpaces
+    /**
+     * <p>
+     * Follows the chain:</p>
+     *
+     * <pre>
+     * Database (PostgreSQL) > JNDI resource (ROOT.xml) > DataSource (data-access.xml) > SessionFactory (data-access.xml) > Session (Hibernate) > TrasactionManager (Hibernate) > Transaction (@Service) > Query (DAO) > Result (DAO) > business result
+     * </pre>
+     *
+     * <p>
+     * to obtain a Session on which all the queries will be ran.</p>
+     *
+     * <p>
+     * It needs a transactional context, such as the @Service.</p>
+     *
+     * @return a session to the database
+     */
     public Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }

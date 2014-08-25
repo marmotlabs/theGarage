@@ -17,8 +17,13 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
+ * <p>Entity class representing a space within a level in the garage.</p>
  *
- * @author Sofia Craciun <sofia.craciun@gmail.com>
+ * <p>Offers full flexibility about the number of spaces in the garage.</p>
+ *
+ * <p>It can only exist within a {@link Level}.</p>
+ *
+ * @author Sofia Craciun <craciun.sofia@gmail.com>
  */
 @Entity
 @Table(name = "SPACE")
@@ -34,18 +39,30 @@ public class Space implements Serializable {
     public static final String GET_SPACE_BY_LICENSE_PLATE = "Space.getSpaceByLicensePlate";
     public static final String GET_FIRST_EMPTY_SPACE = "Space.getFirstEmptySpace";
 
+    /**
+     * Technical ID.
+     */
     @Id
     @Column(name = "SPACE_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SPACE_ID_GEN")
     private Long id;
 
+    /**
+     * position + level = business ID (uniquely identifies the entity).
+     */
     @Column(name = "POSITION", nullable = false)
     private Integer position;
 
+    /**
+     * position + level = business ID (uniquely identifies the entity).
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LEVEL_FK", nullable = false)
     private Level level;
 
+    /**
+     * The vehicle occupying this space, or null if this space is empty.
+     */
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VEHICLE_FK", nullable = true, unique = true)
     private Vehicle vehicle;
