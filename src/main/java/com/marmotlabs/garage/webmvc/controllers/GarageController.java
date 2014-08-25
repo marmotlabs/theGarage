@@ -38,7 +38,6 @@ public class GarageController {
      */
     @RequestMapping(value = "/enter", method = RequestMethod.GET)
     public String enterVehicle(@RequestParam String vehicleType, @RequestParam String licensePlate, Model model) {
-
         EnterVehicleResponse enterVehicleResponse = garageService.enterVehicle(licensePlate, VehicleType.valueOf(vehicleType));
 
         model.addAttribute("enterVehicleStatus", enterVehicleResponse.getStatus().toString());
@@ -63,7 +62,6 @@ public class GarageController {
      */
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
     public String exitVehicle(@RequestParam String licensePlate, Model model) {
-
         ExitVehicleResponse exitVehicleResponse = garageService.exitVehicle(licensePlate);
 
         model.addAttribute("exitVehicleStatus", exitVehicleResponse.getStatus().toString());
