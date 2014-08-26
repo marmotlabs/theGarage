@@ -44,14 +44,14 @@ public class GarageServiceImpl implements GarageService {
     @Transactional(readOnly = false)
     public EnterVehicleResponse enterVehicle(final String licensePlate, final VehicleType vehicleType) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Entering vhicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
+            logger.debug("Entering vehicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
         }
 
         EnterVehicleResponse result = new EnterVehicleResponse();
 
         if (licensePlate == null || licensePlate.isEmpty()) {
             if (logger.isInfoEnabled()) {
-                logger.info("The user tried to enter a vehicle without sepecifying a licensePlate");
+                logger.info("The user tried to enter a vehicle without specifying a licensePlate");
             }
             // If the licensePlate is null, the car is rejected, return ERROR_LICENSE_PLATE_IS_MANDATORY
             result.setStatus(EnterVehicleStatus.ERROR_LICENSE_PLATE_IS_MANDATORY);
@@ -71,7 +71,7 @@ public class GarageServiceImpl implements GarageService {
 
                 if (vehicle == null) {
                     if (logger.isDebugEnabled()) {
-                        logger.debug("Vehicle does not exist in the databse, crete vehicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
+                        logger.debug("Vehicle does not exist in the database, create vehicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
                     }
 
                     // If vehicle does not exist, create vehicle
