@@ -10,6 +10,7 @@ import com.marmotlabs.garage.service.utils.EnterVehicleResponse;
 import com.marmotlabs.garage.service.utils.EnterVehicleStatus;
 import com.marmotlabs.garage.service.utils.ExitVehicleResponse;
 import com.marmotlabs.garage.service.utils.ExitVehicleStatus;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Stateless implementation of the {@link GarageService}.
- * 
+ *
  * {@inheritDoc}
  */
 @Service
 @Transactional(readOnly = true)
 public class GarageServiceImpl implements GarageService {
+
+    private static final Logger logger = Logger.getLogger(GarageServiceImpl.class);
 
     @Autowired
     private SpaceDao spaceDao;
@@ -38,51 +41,81 @@ public class GarageServiceImpl implements GarageService {
     @Override
     @Transactional(readOnly = false)
     public EnterVehicleResponse enterVehicle(String licensePlate, VehicleType vehicleType) {
-        // debug - entering vehicle: licensePlate= , vehicleType= 
+
+        // Debug - entering vehicle: licensePlate= , vehicleType= 
+        if (logger.isDebugEnabled()) {
+            logger.debug("Entering vhicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
+        }
+
         EnterVehicleResponse result = new EnterVehicleResponse();
 
-        // Get the first empty space
-        Space space = spaceDao.getFirstEmptySpace();
-
-        if (space == null) {
-            // If there is no empty space found, the garage is full, return ERROR_GARAGE_IS_FULL
-            // info - no space left in the garage for vehicle: licensePlate= , vehicleType= 
-            result.setStatus(EnterVehicleStatus.ERROR_GARAGE_IS_FULL);
-        } else {
-            // Get vehicle by licensePlate
-            Vehicle vehicle = vehicleDao.getVehicleByLicensePlate(licensePlate);
-
-            if (vehicle == null) {
-                // If vehicle does not exist, create vehicle
-                // debug - vehicle does not exist in the databse, create vehicle: licensePlate= , vehicleType= 
-                vehicle = new Vehicle();
-                vehicle.setLicensePlate(licensePlate);
-                vehicle.setType(vehicleType);
-
-                vehicleDao.saveOrUpdate(vehicle);
+        if (licensePlate == null || licensePlate.isEmpty()) {
+            // Info - the user tried to enter a vehicle without sepecifying a licensePlate     
+            if (logger.isInfoEnabled()) {
+                logger.info("The user tried to enter a vehicle without sepecifying a licensePlate");
             }
+            // If the licensePlate is null, the car is rejected, return ERROR_LICENSE_PLATE_IS_MANDATORY
+            result.setStatus(EnterVehicleStatus.ERROR_LICENSE_PLATE_IS_MANDATORY);
+        } else {
+            // Get the first empty space
+            Space space = spaceDao.getFirstEmptySpace();
 
-            // Check if vehicle is already in the garage
-            Space currentSpaceForVehicle = spaceDao.getSpaceByLicensePlate(vehicle.getLicensePlate());
-            if (currentSpaceForVehicle == null) {
-                // debug - "entering vehicle: vehicle= " + vehicle.toString()
-                // Most optimistic case: garage is not full + vehicle not already in
-
-                // Level is lazy, but we will need it in the view, where the session will be closed
-                Hibernate.initialize(space.getLevel());
-
-                // Assign a space to the current vehicle
-                // debug - "assigning space= " + space.toString() + " to vehicle= " + vehicle.toString()
-                space.setVehicle(vehicle);
-                spaceDao.saveOrUpdate(space);
-                // Populate the result
-                result.setStatus(EnterVehicleStatus.OK);
-                result.setSpace(space);
-                result.setVehicle(vehicle);
+            if (space == null) {
+                // Info - no space left in the garage for vehicle: licensePlate= , vehicleType= 
+                if (logger.isInfoEnabled()) {
+                    logger.info("No space left in the garage for vehicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
+                }
+                // If there is no empty space found, the garage is full, return ERROR_GARAGE_IS_FULL
+                result.setStatus(EnterVehicleStatus.ERROR_GARAGE_IS_FULL);
             } else {
-                // This vehicle is already in the garage, return ERROR_VEHICLE_ALREADY_IN
-                // info - : licensePlate= , vehicleType= 
-                result.setStatus(EnterVehicleStatus.ERROR_VEHICLE_ALREADY_IN);
+                // Get vehicle by licensePlate
+                Vehicle vehicle = vehicleDao.getVehicleByLicensePlate(licensePlate);
+
+                if (vehicle == null) {
+                    // Debug - vehicle does not exist in the databse, create vehicle: licensePlate= , vehicleType= 
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Vehicle does not exist in the databse, crete vehicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
+                    }
+
+                    // If vehicle does not exist, create vehicle
+                    vehicle = new Vehicle();
+                    vehicle.setLicensePlate(licensePlate);
+                    vehicle.setType(vehicleType);
+
+                    vehicleDao.saveOrUpdate(vehicle);
+                }
+
+                // Check if vehicle is already in the garage
+                Space currentSpaceForVehicle = spaceDao.getSpaceByLicensePlate(vehicle.getLicensePlate());
+                if (currentSpaceForVehicle == null) {
+                    // Debug - "entering vehicle: vehicle= " + vehicle.toString()
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Entering vehicle: vehicle= " + vehicle.toString());
+                    }
+                    // Most optimistic case: garage is not full + vehicle not already in
+
+                    // Level is lazy, but we will need it in the view, where the session will be closed
+                    Hibernate.initialize(space.getLevel());
+
+                    // Assign a space to the current vehicle
+                    // Debug - "assigning space= " + space.toString() + " to vehicle= " + vehicle.toString()
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Assigning space= /" + space.toString() + " to vehicle= /" + vehicle.toString());
+                    }
+                    space.setVehicle(vehicle);
+                    spaceDao.saveOrUpdate(space);
+                    // Populate the result
+                    result.setStatus(EnterVehicleStatus.OK);
+                    result.setSpace(space);
+                    result.setVehicle(vehicle);
+                } else {
+                    // This vehicle is already in the garage, return ERROR_VEHICLE_ALREADY_IN
+                    // Info - : licensePlate= , vehicleType= 
+                    if (logger.isInfoEnabled()) {
+                        logger.info("This vehicle is already in the garage: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
+                    }
+                    result.setStatus(EnterVehicleStatus.ERROR_VEHICLE_ALREADY_IN);
+                }
             }
         }
 
@@ -92,17 +125,32 @@ public class GarageServiceImpl implements GarageService {
     @Override
     @Transactional(readOnly = false)
     public ExitVehicleResponse exitVehicle(String licensePlate) {
+        // Debug - "Exit vehicle: licensePlate= " + licensePlate
+        if (logger.isDebugEnabled()) {
+            logger.debug("Exit vehicle: licensePlate= " + licensePlate);
+        }
         ExitVehicleResponse result = new ExitVehicleResponse();
 
         // Check if vehicle is in the garage 
         Space currentSpaceForVehicle = spaceDao.getSpaceByLicensePlate(licensePlate);
 
         if (currentSpaceForVehicle == null) {
+            // DEBUG - "Vehicle with licensePlate= " + licensePlate + " is not in the garage"
+            if (logger.isDebugEnabled()) {
+                logger.debug("Vehicle with licensePlate= " + licensePlate + " is not in the garage");
+            }
+
             // If there is no empty space found, return ERROR_VEHICLE_NOT_IN_THE_GARAGE
             result.setStatus(ExitVehicleStatus.ERROR_VEHICLE_NOT_IN_THE_GARAGE);
         } else {
             // Level is lazy, byt we will need the level in the view, where the session will be closed
             Hibernate.initialize(currentSpaceForVehicle.getLevel());
+
+            // INFO - "Vehicle with licensePlate= " + licensePlate + " was removed from level " + currentSpaceForVehicle.getLevel().getStory() 
+            // + ", position " + currentSpaceForVehicle.getPosition
+            if (logger.isInfoEnabled()) {
+                logger.info("Vehicle with licensePlate= " + licensePlate + " was removed");
+            }
 
             currentSpaceForVehicle.setVehicle(null);
             spaceDao.saveOrUpdate(currentSpaceForVehicle);
