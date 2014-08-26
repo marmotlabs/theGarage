@@ -18,7 +18,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * <p>At least one level is required in order to have any {@link Space} and thus
  * any {@link Vehicle} in the database.</p>
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 @Entity
 @Table(name = "LEVEL")

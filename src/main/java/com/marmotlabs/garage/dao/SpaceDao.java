@@ -5,7 +5,7 @@ import com.marmotlabs.garage.model.Space;
 /**
  * DAO handling the Space entities.
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 public interface SpaceDao extends AbstractDao<Space, Long> {
 

@@ -19,7 +19,10 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * @author Sofia Craciun {@link GarageServiceImpl}
+ *
+ * {@link GarageServiceImpl}
+ *
+ * @author Sofia Craciun
  *
  */
 @RunWith(MockitoJUnitRunner.class)

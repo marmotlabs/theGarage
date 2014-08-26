@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
+ *
  * @param <E>
  * @param <I>
  */

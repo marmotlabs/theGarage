@@ -6,7 +6,7 @@ import com.marmotlabs.garage.model.Vehicle;
 /**
  * POJO class used as a return type for the enterVehicle() operation.
  * 
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 public class EnterVehicleResponse {
 

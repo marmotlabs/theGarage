@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Index (main page) MVC controller.
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 @Controller
 @RequestMapping(value = "/")

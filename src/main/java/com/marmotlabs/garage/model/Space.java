@@ -23,7 +23,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * <p>It can only exist within a {@link Level}.</p>
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 @Entity
 @Table(name = "SPACE")

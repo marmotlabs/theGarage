@@ -9,7 +9,7 @@ import com.marmotlabs.garage.model.VehicleType;
  * 
  * <p>Transactions are isolated on this layer. Default behavior is that transactions are readOnly, if not specified otherwise at method-level.</p>
  * 
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 public interface GarageService {
 

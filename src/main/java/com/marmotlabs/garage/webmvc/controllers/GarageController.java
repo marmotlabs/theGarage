@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * An MVC controller handling all the vehicle operations.
  * 
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 @Controller
 @RequestMapping(value = "/vehicle")

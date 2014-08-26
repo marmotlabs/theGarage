@@ -21,7 +21,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * A vehicle from our database could be associated to a {@link Space} or
  * not.</p>
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 @Entity
 @Table(name = "VEHICLE")

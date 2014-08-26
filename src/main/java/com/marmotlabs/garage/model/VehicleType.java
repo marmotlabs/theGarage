@@ -9,7 +9,7 @@ package com.marmotlabs.garage.model;
  * entered or exited the garage, nor how wide a space should be to hold a
  * certain type of vehicle.</p>
  *
- * @author Sofia Craciun <sofia.craciun@gmail.com>
+ * @author Sofia Craciun
  */
 public enum VehicleType {
 

@@ -3,7 +3,7 @@ package com.marmotlabs.garage.service.utils;
 /**
  * Enum specifying the status of the enterVehicle() operation
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 public enum EnterVehicleStatus {
 

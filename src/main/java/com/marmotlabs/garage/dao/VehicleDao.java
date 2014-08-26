@@ -5,7 +5,7 @@ import com.marmotlabs.garage.model.Vehicle;
 /**
  * DAO handling the Vehicle entities.
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 public interface VehicleDao extends AbstractDao<Vehicle, Long> {
 

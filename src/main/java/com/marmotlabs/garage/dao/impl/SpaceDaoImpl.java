@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 @Repository
 public class SpaceDaoImpl extends AbstractDaoImpl<Space, Long> implements SpaceDao {

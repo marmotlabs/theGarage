@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Sofia Craciun <craciun.sofia@gmail.com>
+ * @author Sofia Craciun
  */
 @Repository
 public class VehicleDaoImpl extends AbstractDaoImpl<Vehicle, Long> implements VehicleDao {
