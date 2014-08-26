@@ -176,4 +176,15 @@ public class GarageServiceTest {
         Assert.assertNotNull(response.getStatus());
         Assert.assertEquals(ExitVehicleStatus.OK, response.getStatus());
     }
+
+    /**
+     * {@link GarageServiceImpl#findSpaceByVehicle(java.lang.String) }
+     */
+    @Test
+    public void testFindSpaceByVehicle() {
+        Space space = new Space();
+        Mockito.when(spaceDao.getSpaceByLicensePlate(Matchers.anyString())).thenReturn(space);
+
+        Assert.assertEquals(space, garageService.findSpaceByVehicle("M IP 9999"));
+    }
 }

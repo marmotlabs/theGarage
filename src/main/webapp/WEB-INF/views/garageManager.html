@@ -1,0 +1,101 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-2.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:dt="http://www.thymeleaf.org/datatables4jdialect">   
+    <head>
+        <title>Sofia Craciun - The garage</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="../resources/css/bootstrap-theme.css" type="text/css" media="screen"
+              th:href="@{/css/bootstrap-theme.css}"/>
+        <link rel="stylesheet" href="../resources/css/bootstrap.css" type="text/css" media="screen"
+              th:href="@{/css/bootstrap.css}"/>
+        <link rel="stylesheet" href="../resources/css/main.css" type="text/css" media="screen"
+              th:href="@{/css/main.css}"/>
+        <link rel="stylesheet" href="../resources/css/font-awesome.css" type="text/css" media="screen"
+              th:href="@{/css/font-awesome.css}"/>
+    </head>
+    <body>
+
+        <!--NAV-->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <img class="logo" src="../resources/img/logo/garage_logo.png" th:src="@{/img/logo/garage_logo.png}" alt="The Garage"/>
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Manager area</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <!--/NAV-->
+
+        <!-- Garage background image --> 
+        <div class="garage-cover">
+            <div class="image" style="background-image: url(../resources/img/cover.jpg);" th:style="'background-image: url(' + @{/img/cover.jpg} + ');'"></div>
+        </div>
+        <!-- /Garage background image --> 
+
+        <div class="container">
+            <div class="row" th:switch="${findSpaceStatus}">
+                <div th:case="SPACE_FOUND" class="alert alert-info" role="alert">
+                    <p th:text="|Vehicle could be found on level ${spaceFound.level.story}, position ${spaceFound.position}|">Vehicle could be found on level B, position 6</p>
+                </div>
+                <div th:case="SPACE_NOT_FOUND" class="alert alert-info" role="alert">
+                    <p>Vehicle could not be found.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="content">
+                    <form action="/vehicle/findSpace" th:action="@{/vehicle/findSpace}" method="get" id="findSpace" class="row enter-form padding-bottom">
+                        <div class="col-sm-9 col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    Check vehicle space:
+                                </span>
+                                <input type="text" name="licensePlate" class="form-control" placeholder="License plate number..."/>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-xs-12">
+                            <button type="submit" class="enter btn btn-primary">Find vehicle's space</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 contact">
+                        <h3>Contact</h3>
+                        <ul>
+                            <li>Craciun Sofia</li>
+                            <li><strong>Tel:</strong> +49 01522 474 4054</li>
+                            <li><strong>Email:</strong> craciun.sofia@gmail.com</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="../resources/img/footer-map.png" th:src="@{/img/footer-map.png}" alt="Google Map" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../resources/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    </body>
+</html>

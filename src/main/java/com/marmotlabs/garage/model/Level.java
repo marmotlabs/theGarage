@@ -11,11 +11,14 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * <p>Entity class representing a level in the garage.</p>
+ * <p>
+ * Entity class representing a level in the garage.</p>
  *
- * <p>Offers full flexibility about the number of levels in the garage.</p>
+ * <p>
+ * Offers full flexibility about the number of levels in the garage.</p>
  *
- * <p>At least one level is required in order to have any {@link Space} and thus
+ * <p>
+ * At least one level is required in order to have any {@link Space} and thus
  * any {@link Vehicle} in the database.</p>
  *
  * @author Sofia Craciun

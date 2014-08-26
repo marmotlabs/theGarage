@@ -9,5 +9,6 @@ package com.marmotlabs.garage.webmvc.controllers.utils;
 public class Pages {
 
     public static final String INDEX = "index";
+    public static final String GARAGE_MANAGER = "garageManager";
 
 }

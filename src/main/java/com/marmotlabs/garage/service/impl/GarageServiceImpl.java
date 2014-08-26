@@ -10,6 +10,8 @@ import com.marmotlabs.garage.service.utils.EnterVehicleResponse;
 import com.marmotlabs.garage.service.utils.EnterVehicleStatus;
 import com.marmotlabs.garage.service.utils.ExitVehicleResponse;
 import com.marmotlabs.garage.service.utils.ExitVehicleStatus;
+import com.marmotlabs.garage.service.utils.FindSpaceByVehicleResponse;
+import com.marmotlabs.garage.service.utils.FindSpaceByVehicleStatus;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class GarageServiceImpl implements GarageService {
 
     @Override
     @Transactional(readOnly = false)
-    public EnterVehicleResponse enterVehicle(String licensePlate, VehicleType vehicleType) {
+    public EnterVehicleResponse enterVehicle(final String licensePlate, final VehicleType vehicleType) {
         if (logger.isDebugEnabled()) {
             logger.debug("Entering vhicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
         }
@@ -116,7 +118,7 @@ public class GarageServiceImpl implements GarageService {
 
     @Override
     @Transactional(readOnly = false)
-    public ExitVehicleResponse exitVehicle(String licensePlate) {
+    public ExitVehicleResponse exitVehicle(final String licensePlate) {
         if (logger.isDebugEnabled()) {
             logger.debug("Exit vehicle: licensePlate= " + licensePlate);
         }
@@ -151,4 +153,20 @@ public class GarageServiceImpl implements GarageService {
 
         return result;
     }
+
+    @Override
+    public FindSpaceByVehicleResponse findSpaceByVehicle(final String licensePlate) {
+        FindSpaceByVehicleResponse response = new FindSpaceByVehicleResponse();
+        Space space = spaceDao.getSpaceByLicensePlate(licensePlate);
+        if (space != null) {
+            // Level is lazy, but we will need it in the view, where the session will be closed
+            Hibernate.initialize(space.getLevel());
+            response.setSpace(space);
+            response.setStatus(FindSpaceByVehicleStatus.SPACE_FOUND);
+        } else {
+            response.setStatus(FindSpaceByVehicleStatus.SPACE_NOT_FOUND);
+        }
+        return response;
+    }
+
 }
