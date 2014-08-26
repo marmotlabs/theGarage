@@ -28,12 +28,21 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class GarageServiceTest {
 
+    /**
+     * The class being tested
+     */
     @InjectMocks
     GarageServiceImpl garageService;
 
+    /**
+     * A mock (fake) object that will be injected into the garageService
+     */
     @Mock
     private SpaceDao spaceDao;
 
+    /**
+     * A mock (fake) object that will be injected into the garageService
+     */
     @Mock
     private VehicleDao vehicleDao;
 
@@ -50,6 +59,10 @@ public class GarageServiceTest {
     }
 
     /**
+     * Tests the enter garage operation, when the garage is full.
+     *
+     * Expecting error message.
+     *
      * {@link GarageServiceImpl#enterVehicle(java.lang.String, com.marmotlabs.garage.model.VehicleType)}
      */
     @Test
@@ -64,6 +77,10 @@ public class GarageServiceTest {
     }
 
     /**
+     * Tests the enter garage operation, when the vehicle is already in.
+     *
+     * Expecting error message.
+     *
      * {@link GarageServiceImpl#enterVehicle(java.lang.String, com.marmotlabs.garage.model.VehicleType)}
      */
     @Test
@@ -84,6 +101,8 @@ public class GarageServiceTest {
     }
 
     /**
+     * Tests the enter garage operation with no error message.
+     *
      * {@link GarageServiceImpl#enterVehicle(java.lang.String, com.marmotlabs.garage.model.VehicleType)}
      */
     @Test
@@ -105,6 +124,10 @@ public class GarageServiceTest {
     }
 
     /**
+     * Tests the enter garage operation, with no (empty) license plate.
+     *
+     * Expecting error message.
+     *
      * {@link GarageServiceImpl#enterVehicle(java.lang.String, com.marmotlabs.garage.model.VehicleType)}
      */
     @Test
@@ -117,6 +140,10 @@ public class GarageServiceTest {
     }
 
     /**
+     * Tests the exit garage operation, when the vehicle is not in.
+     *
+     * Expecting error message.
+     *
      * {@link GarageServiceImpl#exitVehicle(java.lang.String)}
      */
     @Test
@@ -131,6 +158,8 @@ public class GarageServiceTest {
     }
 
     /**
+     * Tests the exit garage operation with no error message.
+     *
      * {@link GarageServiceImpl#exitVehicle(java.lang.String)}
      */
     @Test

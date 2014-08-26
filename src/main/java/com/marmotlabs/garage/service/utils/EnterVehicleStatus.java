@@ -21,8 +21,8 @@ public enum EnterVehicleStatus {
      */
     ERROR_VEHICLE_ALREADY_IN,
     /**
-     * Indicates that the vehicle has been rejected, because the none was
-     * specified
+     * Indicates that the vehicle has been rejected, because no license plate
+     * was specified
      */
     ERROR_LICENSE_PLATE_IS_MANDATORY;
 }

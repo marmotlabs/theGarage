@@ -41,8 +41,6 @@ public class GarageServiceImpl implements GarageService {
     @Override
     @Transactional(readOnly = false)
     public EnterVehicleResponse enterVehicle(String licensePlate, VehicleType vehicleType) {
-
-        // Debug - entering vehicle: licensePlate= , vehicleType= 
         if (logger.isDebugEnabled()) {
             logger.debug("Entering vhicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
         }
@@ -50,7 +48,6 @@ public class GarageServiceImpl implements GarageService {
         EnterVehicleResponse result = new EnterVehicleResponse();
 
         if (licensePlate == null || licensePlate.isEmpty()) {
-            // Info - the user tried to enter a vehicle without sepecifying a licensePlate     
             if (logger.isInfoEnabled()) {
                 logger.info("The user tried to enter a vehicle without sepecifying a licensePlate");
             }
@@ -61,7 +58,6 @@ public class GarageServiceImpl implements GarageService {
             Space space = spaceDao.getFirstEmptySpace();
 
             if (space == null) {
-                // Info - no space left in the garage for vehicle: licensePlate= , vehicleType= 
                 if (logger.isInfoEnabled()) {
                     logger.info("No space left in the garage for vehicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
                 }
@@ -72,7 +68,6 @@ public class GarageServiceImpl implements GarageService {
                 Vehicle vehicle = vehicleDao.getVehicleByLicensePlate(licensePlate);
 
                 if (vehicle == null) {
-                    // Debug - vehicle does not exist in the databse, create vehicle: licensePlate= , vehicleType= 
                     if (logger.isDebugEnabled()) {
                         logger.debug("Vehicle does not exist in the databse, crete vehicle: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
                     }
@@ -88,7 +83,6 @@ public class GarageServiceImpl implements GarageService {
                 // Check if vehicle is already in the garage
                 Space currentSpaceForVehicle = spaceDao.getSpaceByLicensePlate(vehicle.getLicensePlate());
                 if (currentSpaceForVehicle == null) {
-                    // Debug - "entering vehicle: vehicle= " + vehicle.toString()
                     if (logger.isDebugEnabled()) {
                         logger.debug("Entering vehicle: vehicle= " + vehicle.toString());
                     }
@@ -98,7 +92,6 @@ public class GarageServiceImpl implements GarageService {
                     Hibernate.initialize(space.getLevel());
 
                     // Assign a space to the current vehicle
-                    // Debug - "assigning space= " + space.toString() + " to vehicle= " + vehicle.toString()
                     if (logger.isDebugEnabled()) {
                         logger.debug("Assigning space= /" + space.toString() + " to vehicle= /" + vehicle.toString());
                     }
@@ -110,7 +103,6 @@ public class GarageServiceImpl implements GarageService {
                     result.setVehicle(vehicle);
                 } else {
                     // This vehicle is already in the garage, return ERROR_VEHICLE_ALREADY_IN
-                    // Info - : licensePlate= , vehicleType= 
                     if (logger.isInfoEnabled()) {
                         logger.info("This vehicle is already in the garage: licensePlate=" + licensePlate + ", vehicleType=" + vehicleType);
                     }
@@ -125,7 +117,6 @@ public class GarageServiceImpl implements GarageService {
     @Override
     @Transactional(readOnly = false)
     public ExitVehicleResponse exitVehicle(String licensePlate) {
-        // Debug - "Exit vehicle: licensePlate= " + licensePlate
         if (logger.isDebugEnabled()) {
             logger.debug("Exit vehicle: licensePlate= " + licensePlate);
         }
@@ -135,7 +126,6 @@ public class GarageServiceImpl implements GarageService {
         Space currentSpaceForVehicle = spaceDao.getSpaceByLicensePlate(licensePlate);
 
         if (currentSpaceForVehicle == null) {
-            // DEBUG - "Vehicle with licensePlate= " + licensePlate + " is not in the garage"
             if (logger.isDebugEnabled()) {
                 logger.debug("Vehicle with licensePlate= " + licensePlate + " is not in the garage");
             }
@@ -146,8 +136,6 @@ public class GarageServiceImpl implements GarageService {
             // Level is lazy, byt we will need the level in the view, where the session will be closed
             Hibernate.initialize(currentSpaceForVehicle.getLevel());
 
-            // INFO - "Vehicle with licensePlate= " + licensePlate + " was removed from level " + currentSpaceForVehicle.getLevel().getStory() 
-            // + ", position " + currentSpaceForVehicle.getPosition
             if (logger.isInfoEnabled()) {
                 logger.info("Vehicle with licensePlate= " + licensePlate + " was removed");
             }
