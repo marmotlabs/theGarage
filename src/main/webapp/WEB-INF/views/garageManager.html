@@ -60,13 +60,19 @@
             </div>
             <div class="row">
                 <div class="content">
-                    <form action="/vehicle/findSpace" th:action="@{/vehicle/findSpace}" method="get" id="findSpace" class="row enter-form padding-bottom">
+                    <form action="/garageManager/findSpace" th:action="@{/garageManager/findSpace}" method="get" id="findSpace" class="row enter-form padding-bottom">
                         <div class="col-sm-9 col-xs-12">
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     Check vehicle space:
                                 </span>
-                                <input type="text" name="licensePlate" class="form-control" placeholder="License plate number..."/>
+                                <select class="form-control" name="licensePlate" id="licensePlate">
+                                    <option value="-1">Choose license plate number...</option>
+                                    <option th:each="vehicle : ${allVehiclesIn}" 
+                                            th:name="${vehicle.licensePlate}" 
+                                            th:text="${vehicle.licensePlate}">
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-3 col-xs-12">

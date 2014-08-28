@@ -136,7 +136,13 @@
                                 <span class="input-group-addon">
                                     Vehicle out:
                                 </span>
-                                <input type="text" name="licensePlate" id="licensePlate"  class="form-control" placeholder="License plate number..."/>
+                                <select class="form-control" name="licensePlate" id="licensePlate">
+                                    <option value="-1">Choose license plate number...</option>
+                                    <option th:each="vehicle : ${allVehiclesIn}" 
+                                            th:name="${vehicle.licensePlate}" 
+                                            th:text="${vehicle.licensePlate}">
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-3 col-xs-12">
