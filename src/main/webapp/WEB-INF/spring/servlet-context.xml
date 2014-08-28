@@ -21,10 +21,7 @@
     <mvc:resources mapping="/img/**" location="/WEB-INF/resources/img/" />
     <mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
     <mvc:resources mapping="/fonts/**" location="/WEB-INF/resources/fonts/" />
-    
-    <!-- Forwards requests to the "/garageManager" resource to the "garageManager" view, without the need of a Spring @Controller -->
-    <mvc:view-controller path="/garageManager" view-name="garageManager"/>
-    
+       
     <!-- Thymeleaf -->
     <!-- Based on what the @Controller methods return, it adds a prefix and a suffix to find the template to be displayed -->
     <bean id="templateResolver"
