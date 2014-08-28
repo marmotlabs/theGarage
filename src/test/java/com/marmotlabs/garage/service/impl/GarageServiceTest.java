@@ -9,6 +9,9 @@ import com.marmotlabs.garage.service.utils.EnterVehicleResponse;
 import com.marmotlabs.garage.service.utils.EnterVehicleStatus;
 import com.marmotlabs.garage.service.utils.ExitVehicleResponse;
 import com.marmotlabs.garage.service.utils.ExitVehicleStatus;
+import com.marmotlabs.garage.service.utils.FindSpaceByVehicleResponse;
+import com.marmotlabs.garage.service.utils.FindSpaceByVehicleStatus;
+import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -178,13 +181,50 @@ public class GarageServiceTest {
     }
 
     /**
+     * Tests the search of space, with no error message.
+     *
      * {@link GarageServiceImpl#findSpaceByVehicle(java.lang.String) }
      */
     @Test
-    public void testFindSpaceByVehicle() {
+    public void testFindSpaceByVehicle_SpaceFound() {
         Space space = new Space();
         Mockito.when(spaceDao.getSpaceByLicensePlate(Matchers.anyString())).thenReturn(space);
 
-        Assert.assertEquals(space, garageService.findSpaceByVehicle("M IP 9999"));
+        FindSpaceByVehicleResponse response = garageService.findSpaceByVehicle("M IP 9999");
+
+        Assert.assertNotNull(response);
+        Assert.assertNotNull(response.getStatus());
+        Assert.assertEquals(space, response.getSpace());
+        Assert.assertEquals(FindSpaceByVehicleStatus.SPACE_FOUND, response.getStatus());
+    }
+
+    /**
+     * Tests the search of space, with error message.
+     *
+     * {@link GarageServiceImpl#findSpaceByVehicle(java.lang.String) }
+     */
+    @Test
+    public void testFindSpaceByVehicle_SpaceNotFound() {
+        Mockito.when(spaceDao.getSpaceByLicensePlate(Matchers.anyString())).thenReturn(null);
+
+        FindSpaceByVehicleResponse response = garageService.findSpaceByVehicle("M IP 9999");
+
+        Assert.assertNotNull(response);
+        Assert.assertNull(response.getSpace());
+        Assert.assertNotNull(response.getStatus());
+        Assert.assertEquals(FindSpaceByVehicleStatus.SPACE_NOT_FOUND, response.getStatus());
+    }
+
+    /**
+     *
+     * {@link GarageServiceImpl#getAllVehiclesIn()}
+     */
+    @Test
+    public void testFindAllVehiclesIn() {
+        ArrayList<Vehicle> allVehicleIn = new ArrayList<Vehicle>();
+
+        Mockito.when(vehicleDao.findAllVehiclesIn()).thenReturn(allVehicleIn);
+
+        Assert.assertEquals(allVehicleIn, garageService.getAllVehiclesIn());
     }
 }
