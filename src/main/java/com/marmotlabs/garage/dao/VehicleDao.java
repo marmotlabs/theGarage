@@ -1,6 +1,7 @@
 package com.marmotlabs.garage.dao;
 
 import com.marmotlabs.garage.model.Vehicle;
+import java.util.List;
 
 /**
  * DAO handling the Vehicle entities.
@@ -19,4 +20,10 @@ public interface VehicleDao extends AbstractDao<Vehicle, Long> {
      */
     Vehicle getVehicleByLicensePlate(String licensePlate);
 
+    /**
+     * Returns the list of vehicles in the garage
+     *
+     * @return the list of vehicle in the garage
+     */
+    List<Vehicle> findAllVehiclesIn();
 }

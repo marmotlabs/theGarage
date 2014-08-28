@@ -1,13 +1,15 @@
 package com.marmotlabs.garage.service;
 
+import com.marmotlabs.garage.model.Vehicle;
 import com.marmotlabs.garage.service.utils.ExitVehicleResponse;
 import com.marmotlabs.garage.service.utils.EnterVehicleResponse;
 import com.marmotlabs.garage.model.VehicleType;
 import com.marmotlabs.garage.service.utils.FindSpaceByVehicleResponse;
+import java.util.List;
 
 /**
  * <p>
- * The main application service, containing all the 3 possible actions.</p>
+ * The main application service, containing all the 4 possible actions.</p>
  *
  * <p>
  * Transactions are isolated on this layer. Default behavior is that
@@ -58,4 +60,12 @@ public interface GarageService {
      */
     FindSpaceByVehicleResponse findSpaceByVehicle(String licensePlate);
 
+    /**
+     * Returns the list of vehicles in the garage
+     *
+     * Does not return null.
+     *
+     * @return the list of all vehicles in the garage
+     */
+    List<Vehicle> getAllVehiclesIn();
 }

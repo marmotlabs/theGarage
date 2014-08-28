@@ -12,6 +12,7 @@ import com.marmotlabs.garage.service.utils.ExitVehicleResponse;
 import com.marmotlabs.garage.service.utils.ExitVehicleStatus;
 import com.marmotlabs.garage.service.utils.FindSpaceByVehicleResponse;
 import com.marmotlabs.garage.service.utils.FindSpaceByVehicleStatus;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,4 +170,11 @@ public class GarageServiceImpl implements GarageService {
         return response;
     }
 
+    @Override
+    public List<Vehicle> getAllVehiclesIn() {
+        // Returns the list with vehicles in the garage
+        List<Vehicle> allVehiclesIn = vehicleDao.findAllVehiclesIn();
+
+        return allVehiclesIn;
+    }
 }

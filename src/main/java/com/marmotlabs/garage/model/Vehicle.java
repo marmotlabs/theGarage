@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,10 +27,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 @Table(name = "VEHICLE")
 @SequenceGenerator(name = "VEHICLE_ID_GEN", sequenceName = "SQ_VEHICLE", allocationSize = 1)
-@NamedQuery(name = Vehicle.GET_VEHICLE_BY_LICENSE_PLATE, query = "select v from Vehicle v where v.licensePlate = :licensePlate")
+@NamedQueries({
+    @NamedQuery(name = Vehicle.GET_VEHICLE_BY_LICENSE_PLATE, query = "select v from Vehicle v where v.licensePlate = :licensePlate"),
+    @NamedQuery(name = Vehicle.GET_ALL_VEHICLES_IN, query = "select v from Vehicle v, Space s where s.vehicle = v.id group by v.id")
+})
 public class Vehicle implements Serializable {
 
     public static final String GET_VEHICLE_BY_LICENSE_PLATE = "Vehicle.getVehicleByLicensePlate";
+    public static final String GET_ALL_VEHICLES_IN = "Vehicle.getAllVehiclesIn";
 
     /**
      * Technical ID.

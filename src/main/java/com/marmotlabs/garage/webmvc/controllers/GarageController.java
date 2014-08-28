@@ -1,12 +1,10 @@
 package com.marmotlabs.garage.webmvc.controllers;
 
-import com.marmotlabs.garage.model.Space;
 import com.marmotlabs.garage.webmvc.controllers.utils.Pages;
 import com.marmotlabs.garage.model.VehicleType;
 import com.marmotlabs.garage.service.GarageService;
 import com.marmotlabs.garage.service.utils.EnterVehicleResponse;
 import com.marmotlabs.garage.service.utils.ExitVehicleResponse;
-import com.marmotlabs.garage.service.utils.FindSpaceByVehicleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,18 +69,9 @@ public class GarageController {
         model.addAttribute("exitVehicle", exitVehicleResponse.getVehicle());
 
         model.addAttribute("numberOfFreeSpaces", garageService.getNumberOfFreeSpaces());
+        model.addAttribute("allVehiclesIn", garageService.getAllVehiclesIn());
 
         return Pages.INDEX;
     }
 
-    @RequestMapping(value = "/findSpace", method = RequestMethod.GET)
-    public String findSpaceByVehicle(@RequestParam String licensePlate, Model model) {
-        FindSpaceByVehicleResponse response = garageService.findSpaceByVehicle(licensePlate);
-        Space space = response.getSpace();
-
-        model.addAttribute("findSpaceStatus", response.getStatus().toString());
-        model.addAttribute("spaceFound", space);
-
-        return Pages.GARAGE_MANAGER;
-    }
 }

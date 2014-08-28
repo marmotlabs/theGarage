@@ -1,7 +1,9 @@
 package com.marmotlabs.garage.webmvc.controllers;
 
+import com.marmotlabs.garage.model.Vehicle;
 import com.marmotlabs.garage.webmvc.controllers.utils.Pages;
 import com.marmotlabs.garage.service.GarageService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +31,10 @@ public class IndexController {
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
         Integer numberOfFreeSpaces = garageService.getNumberOfFreeSpaces();
+        List<Vehicle> allVehiclesIn = garageService.getAllVehiclesIn();
 
         model.addAttribute("numberOfFreeSpaces", numberOfFreeSpaces);
+        model.addAttribute("allVehiclesIn", allVehiclesIn);
         return Pages.INDEX;
     }
 
