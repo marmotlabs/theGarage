@@ -45,6 +45,7 @@ public class GarageController {
         model.addAttribute("enterVehicle", enterVehicleResponse.getVehicle());
 
         model.addAttribute("numberOfFreeSpaces", garageService.getNumberOfFreeSpaces());
+        model.addAttribute("allVehiclesIn", garageService.getAllVehiclesIn());
 
         return Pages.INDEX;
     }

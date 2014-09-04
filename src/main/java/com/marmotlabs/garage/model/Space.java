@@ -38,7 +38,7 @@ public class Space implements Serializable {
     public static final String GET_NUMBER_OF_FREE_SPACES = "Space.getNumberOfFreeSpaces";
     public static final String GET_SPACE_BY_LICENSE_PLATE = "Space.getSpaceByLicensePlate";
     public static final String GET_FIRST_EMPTY_SPACE = "Space.getFirstEmptySpace";
-
+    
     /**
      * Technical ID.
      */
